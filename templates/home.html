@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="../static/style.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Survey</h1>
+    <p>{{ survey.title }}</p>
+    <p>{{ survey.instructions }}</p>
+    <form action="/question/0">
+    <button id="next-page-btn">Start</button>
+    </form>
+</div>
+{% endblock %}
