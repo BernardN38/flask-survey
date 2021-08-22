@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from werkzeug.wrappers import response
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import  satisfaction_survey
 
@@ -12,6 +11,7 @@ responses = []
 
 @app.route('/')
 def home():
+    session['responses'] = []
     return render_template('home.html', survey=satisfaction_survey)
 
 @app.route('/question/<num>')
@@ -28,6 +28,9 @@ def show_question(num):
 
 @app.route('/answer', methods=['POST'])
 def save_answer():
+    responses_in_session = session['responses']
+    responses_in_session.append(request.form.get('answer'))
+    session['responses'] = responses_in_session
     responses.append(request.form.get('answer'))
     if len(responses) >= len(satisfaction_survey.questions):
         return redirect('/thankyou')
